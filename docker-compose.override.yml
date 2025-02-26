@@ -1,0 +1,48 @@
+services:
+ ### Catalog API
+  catalog.api:
+    container_name: app-product    
+    environment:     
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - mongodb     
+ 
+ ### Basket API
+  basket.api:
+    container_name: app-basket
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "CacheSetting:ConnectionString=redisdb:6379"
+    ports:
+      - "8081:8080"
+    networks:
+      - app-network
+    depends_on:
+      - basketdb 
+
+ ### MongoDB
+  mongodb:
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network    
+    volumes:
+      - mongodb-data:/data/db
+
+ ### Redis
+  basketdb:
+    container_name: redisdb
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
