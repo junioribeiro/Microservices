@@ -34,7 +34,7 @@ services:
   redisdb:
     image: redis:alpine
     
-  postgres:
+  postgresdb:
     image: postgres:alpine
   
   pgadmin:
