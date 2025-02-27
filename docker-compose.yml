@@ -6,25 +6,39 @@ networks:
 ### Volumes
 volumes:
       mongodb-data:
+      postgres-data:
+      pgadmin-data:
 ### Services
 services:
   catalog.api:    
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
-      dockerfile: Catalog.API/Dockerfile    
-
-  mongodb:    
-    image: mongo 
-    
-  basketdb:
-    image: redis:alpine 
-
+      dockerfile: Catalog.API/Dockerfile  
+      
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: Basket.API
       dockerfile: Dockerfile
 
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: Discount.API/Dockerfile
 
+  mongodb:    
+    image: mongo 
+    
+  redisdb:
+    image: redis:alpine
+    
+  postgres:
+    image: postgres:alpine
+  
+  pgadmin:
+    image: dpage/pgadmin4    
+
+  
 

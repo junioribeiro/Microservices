@@ -25,7 +25,20 @@ services:
     networks:
       - app-network
     depends_on:
-      - basketdb 
+      - redisdb
+      
+  discount.api:
+    container_name: app-discount
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "DatabaseSettings:ConnectionString=Host=postgresdb;Port=5432;Database=discountdb;Username=admin;Password=admin1234"
+    ports:
+      - "8082:8080"
+    networks:
+      - app-network 
+    depends_on:
+      - postgresdb
 
  ### MongoDB
   mongodb:
@@ -39,10 +52,41 @@ services:
       - mongodb-data:/data/db
 
  ### Redis
-  basketdb:
+  redisdb:
     container_name: redisdb
     restart: always
     ports:
       - 6379:6379
     networks:
       - app-network
+  
+ ### Postgres
+  postgres:
+    container_name: postgresdb
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: discountdb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  
+ ### PgAdmin
+  pgadmin:
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "ads.junio@hotmail.com"
+      PGADMIN_DEFAULT_PASSWORD: admin1234
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+   
+
+  
+
