@@ -16,11 +16,11 @@ services:
       context: .
       dockerfile: Catalog.API/Dockerfile  
       
-  basket.api:
-    image: ${DOCKER_REGISTRY-}basketapi
-    build:
-      context: Basket.API
-      dockerfile: Dockerfile
+  # basket.api:
+  #   image: ${DOCKER_REGISTRY-}basketapi
+  #   build:
+  #     context: Basket.API
+  #     dockerfile: Dockerfile
 
   discount.api:
     image: ${DOCKER_REGISTRY-}discountapi

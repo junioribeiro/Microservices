@@ -14,20 +14,19 @@ services:
       - mongodb     
  
  ### Basket API
-  basket.api:
-    container_name: app-basket
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - "CacheSetting:ConnectionString=redisdb:6379"
-      - "GrpcSettings:DiscountUrl=app-discount-grpc"
-    ports:
-      - "8081:8080"
-    networks:
-      - app-network
-    depends_on:
-      - redisdb
-      - discount.grpc
+  # basket.api:
+  #   container_name: app-basket
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - "CacheSetting:ConnectionString=redisdb:6379"
+  #     - "GrpcSettings:DiscountUrl=app-discount-grpc"
+  #   ports:
+  #     - "8081:8080"
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - redisdb     
       
   discount.api:
     container_name: app-discount
